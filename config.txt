@@ -1,0 +1,4 @@
+User: postgres
+Password: 123
+Dbname: TechShopDB
+Signing Key: Keyy
