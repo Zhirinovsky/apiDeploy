@@ -2,11 +2,14 @@ package bin
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/base64"
+	"net/http"
+	"time"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
-	"net/http"
-	"time"
 )
 
 type AuthForm struct {
@@ -50,11 +53,15 @@ func Login(c *gin.Context) {
 		if userDB.Email == user.Email && passwordCheck == nil {
 			check = true
 			if GlobalErr != nil {
+				message := GlobalErr.Error()
 				GlobalErr = nil
-				c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"status": false, "message": GlobalErr.Error()})
+				c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"status": false, "message": message})
 			} else {
 				newToken := jwt.New(jwt.SigningMethodHS256)
-				tokenString, err := newToken.SignedString([]byte(GetConfigData()["Signing Key"]))
+				randText := make([]byte, 10)
+				_, err = rand.Read(randText)
+				GlobalCheck(err)
+				tokenString, err := newToken.SignedString([]byte(GetConfigData()["Signing Key"] + base64.StdEncoding.EncodeToString(randText)))
 				CheckErr(err)
 				err = Client.HSet(context.Background(), "sessions:"+tokenString, "login", user.Email).Err()
 				CheckErr(err)

@@ -62,8 +62,6 @@ func main() {
 	router.POST("/categories", models.PostCategory)
 	router.PUT("/categories/:id", models.PutCategory)
 	router.DELETE("/categories/:id", models.DeleteCategory)
-	//Позиции корзин
-	router.GET("/carts", models.GetCarts)
 	//Статусы
 	router.GET("/statuses", models.GetStatuses)
 	router.GET("/statuses/:id", models.GetStatusByID)
