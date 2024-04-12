@@ -81,6 +81,6 @@ func main() {
 	router.PUT("/positions/:id", models.PutOrderPosition)
 	router.DELETE("/positions/:id", models.DeleteOrderPosition)
 	//Параметры логов
-	err := router.Run("localhost:8079")
+	err := router.Run("127.0.0.1:8079")
 	bin.CheckErr(err)
 }
