@@ -9,7 +9,7 @@ import (
 
 func main() {
 	bin.ConnectDB()
-	//f, _ := os.Create("info.log")
+	//f, _ := os.Create("info.log")cart
 	//gin.DisableConsoleColor()
 	//gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	router := gin.Default()
@@ -80,6 +80,12 @@ func main() {
 	router.POST("/positions", models.PostOrderPosition)
 	router.PUT("/positions/:id", models.PutOrderPosition)
 	router.DELETE("/positions/:id", models.DeleteOrderPosition)
+	//Позиции корзин
+	router.GET("/carts", models.GetCartPositions)
+	router.GET("/carts/:id", models.GetCartPositionByID)
+	router.POST("/carts", models.PostCartPosition)
+	router.PUT("/carts/:id", models.PutCartPosition)
+	router.DELETE("/carts/:id", models.DeleteCartPosition)
 	//Параметры логов
 	err := router.Run("127.0.0.1:8079")
 	bin.CheckErr(err)

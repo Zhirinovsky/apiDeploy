@@ -123,6 +123,11 @@ func GetCurrentUser(c *gin.Context) {
 		bin.GlobalCheck(err)
 		err = bin.DB.Get(&userData.Role, "select Role.Id, Role.Name from Role inner join \"User\" on Role.id = role_id where email = $1", userData.Email)
 		bin.GlobalCheck(err)
+		err = bin.DB.Get(&userData.Card, "select * from discount_card where id = $1", userData.ID)
+		if err == nil {
+			date, _ := time.Parse(time.RFC3339, userData.Card.Date)
+			userData.Card.Date = time.Time.Format(date, time.DateTime)[0 : len(time.Time.Format(date, time.DateTime))-9]
+		}
 		bin.FinalCheck(c, userData)
 	} else {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"status": false, "message": bin.InvalidTokenMessage})
