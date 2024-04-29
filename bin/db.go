@@ -19,9 +19,15 @@ func ConnectDB() {
 	CheckErr(err)
 	DB, err = sqlx.Connect("postgres", info)
 	CheckErr(err)
+	var password string
+	if data["RedisPassword"] == "-" {
+		password = ""
+	} else {
+		password = data["RedisPassword"]
+	}
 	Client = redis.NewClient(&redis.Options{
 		Addr:     data["RedisAddr"],
-		Password: data["RedisPassword"],
+		Password: password,
 		DB:       db,
 	})
 }
