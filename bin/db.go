@@ -20,8 +20,7 @@ func ConnectDB() {
 	DB, err = sqlx.Connect("postgres", info)
 	CheckErr(err)
 	Client = redis.NewClient(&redis.Options{
-		Addr:     data["RedisAddr"],
-		Password: data["RedisPassword"],
-		DB:       db,
+		Addr: data["RedisAddr"],
+		DB:   db,
 	})
 }
