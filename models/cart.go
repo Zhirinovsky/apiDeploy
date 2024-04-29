@@ -11,6 +11,7 @@ type Cart struct {
 	Amount    int
 	ProductID int `db:"product_id"`
 	UserID    int `db:"user_id"`
+	Active    bool
 	Product   Product
 	User      User
 }
@@ -53,7 +54,7 @@ func PostCartPosition(c *gin.Context) {
 		var cart Cart
 		err := c.BindJSON(&cart)
 		bin.GlobalCheck(err)
-		_, err = bin.DB.Exec("insert into cart_position (amount, product_id, user_id) values ($1, $2, $3)", cart.Amount, cart.ProductID, cart.UserID)
+		_, err = bin.DB.Exec("insert into cart_position (amount, product_id, user_id, active) values ($1, $2, $3, $4)", cart.Amount, cart.ProductID, cart.UserID, cart.Active)
 		bin.GlobalCheck(err)
 		bin.FinalCheck(c, cart)
 	} else {
@@ -67,7 +68,7 @@ func PutCartPosition(c *gin.Context) {
 		var cart Cart
 		err := c.BindJSON(&cart)
 		bin.GlobalCheck(err)
-		_, err = bin.DB.Exec("update cart_position set amount = $2, product_id = $3, user_id = $4 where id = $1", id, cart.Amount, cart.ProductID, cart.UserID)
+		_, err = bin.DB.Exec("update cart_position set amount = $2, product_id = $3, user_id = $4, active = $5 where id = $1", id, cart.Amount, cart.ProductID, cart.UserID, cart.Active)
 		bin.GlobalCheck(err)
 		bin.FinalCheck(c, cart)
 	} else {

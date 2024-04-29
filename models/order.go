@@ -82,6 +82,8 @@ func PostOrder(c *gin.Context) {
 		bin.GlobalCheck(err)
 		_, err = bin.DB.Exec("insert into \"Order\" (date, address, status_id, user_id) values ($1, $2, $3, $4)", order.Date, order.Address, order.StatusID, order.UserID)
 		bin.GlobalCheck(err)
+		err = bin.DB.Get(&order, "select * from \"Order\" where date = $1", order.Date)
+		bin.GlobalCheck(err)
 		bin.FinalCheck(c, order)
 	} else {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"status": false, "message": bin.InvalidTokenMessage})

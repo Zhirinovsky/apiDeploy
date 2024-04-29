@@ -38,9 +38,10 @@ func GetUsers(c *gin.Context) {
 				if err.Error() != "sql: no rows in result set" {
 					bin.GlobalCheck(err)
 				}
+			} else {
+				date, _ := time.Parse(time.RFC3339, users[i].Card.Date)
+				users[i].Card.Date = time.Time.Format(date, time.DateTime)[0 : len(time.Time.Format(date, time.DateTime))-9]
 			}
-			date, _ := time.Parse(time.RFC3339, users[i].Card.Date)
-			users[i].Card.Date = time.Time.Format(date, time.DateTime)[0 : len(time.Time.Format(date, time.DateTime))-9]
 		}
 		bin.FinalCheck(c, users)
 	} else {
@@ -57,9 +58,14 @@ func GetUserByID(c *gin.Context) {
 		err = bin.DB.Get(&user.Role, "select Role.Id, Role.Name from Role where id = $1", user.RoleID)
 		bin.GlobalCheck(err)
 		err = bin.DB.Get(&user.Card, "select * from discount_card where id = $1", user.ID)
-		bin.GlobalCheck(err)
-		date, _ := time.Parse(time.RFC3339, user.Card.Date)
-		user.Card.Date = time.Time.Format(date, time.DateTime)[0 : len(time.Time.Format(date, time.DateTime))-9]
+		if err != nil {
+			if err.Error() != "sql: no rows in result set" {
+				bin.GlobalCheck(err)
+			}
+		} else {
+			date, _ := time.Parse(time.RFC3339, user.Card.Date)
+			user.Card.Date = time.Time.Format(date, time.DateTime)[0 : len(time.Time.Format(date, time.DateTime))-9]
+		}
 		bin.FinalCheck(c, user)
 	} else {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"status": false, "message": bin.InvalidTokenMessage})
