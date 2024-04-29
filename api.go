@@ -5,6 +5,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/my/repo/bin"
 	"github.com/my/repo/models"
+	"net/http"
 	"os"
 )
 
@@ -89,8 +90,8 @@ func main() {
 	router.DELETE("/carts/:id", models.DeleteCartPosition)
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "8079"
 	}
-	err := router.Run(":" + port)
+	err := http.ListenAndServe(":"+port, router)
 	bin.CheckErr(err)
 }
