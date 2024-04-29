@@ -5,6 +5,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/my/repo/bin"
 	"github.com/my/repo/models"
+	"os"
 )
 
 func main() {
@@ -86,7 +87,10 @@ func main() {
 	router.POST("/carts", models.PostCartPosition)
 	router.PUT("/carts/:id", models.PutCartPosition)
 	router.DELETE("/carts/:id", models.DeleteCartPosition)
-	//Параметры логов
-	err := router.Run("127.0.0.1:8079")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	err := router.Run(":" + port)
 	bin.CheckErr(err)
 }
