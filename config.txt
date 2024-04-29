@@ -3,6 +3,7 @@ Password: dYGopaKAWCkxboxgQfnjPfzymDFqFIZT
 Dbname: railway
 Host: viaduct.proxy.rlwy.net
 Port: 10802
-RedisAddr: monorail.proxy.rlwy.net:42886
+RedisAddr: monorail.proxy.rlwy.net:58289
+RedisPassword: nwRocaqIVMdEBgNcaPkhwBXzKbyTcvYF
 RedisDB: 1
 Signing Key: Keyy
