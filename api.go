@@ -5,7 +5,6 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/my/repo/bin"
 	"github.com/my/repo/models"
-	"net/http"
 	"os"
 )
 
@@ -92,6 +91,6 @@ func main() {
 	if port == "" {
 		port = "8079"
 	}
-	err := http.ListenAndServe(":"+port, router)
+	err := router.Run(":" + port)
 	bin.CheckErr(err)
 }
