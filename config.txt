@@ -1,9 +1,9 @@
 User: postgres
-Password: 123
-Dbname: TechShopDB
-Host: localhost
-Port: 5432
-RedisAddr: localhost:6379
-RedisPassword: 
+Password: dYGopaKAWCkxboxgQfnjPfzymDFqFIZT
+Dbname: railway
+Host: viaduct.proxy.rlwy.net
+Port: 10802
+RedisAddr: monorail.proxy.rlwy.net:42886
+RedisPassword: DChqaWxpHKzrMVuPtecxFtBdWHXWydUl
 RedisDB: 1
 Signing Key: Keyy
