@@ -22,7 +22,7 @@ type Product struct {
 func GetProducts(c *gin.Context) {
 	if bin.ValidateToken(c.GetHeader("Authorization")) {
 		var products []Product
-		err := bin.DB.Select(&products, "select * from Product")
+		err := bin.DB.Select(&products, "select * from Product order by Name ASC")
 		bin.GlobalCheck(err)
 		for i, product := range products {
 			err = bin.DB.Select(&products[i].Sets, "select set.id, set.value, product_id, characteristic_id from set where product_id = $1", products[i].ID)
