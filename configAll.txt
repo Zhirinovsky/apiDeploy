@@ -14,6 +14,6 @@ Dbname: TechShopDB
 Host: localhost
 Port: 5432
 RedisAddr: localhost:6379
-RedisPassword:
+RedisPassword: -
 RedisDB: 1
 Signing Key: Keyy

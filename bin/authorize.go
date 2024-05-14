@@ -34,7 +34,7 @@ func Register(c *gin.Context) {
 	GlobalCheck(err)
 	if GlobalErr != nil {
 		GlobalErr = nil
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"status": false, "message": "Данный почтовый адрес уже зарегестрирован"})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"status": false, "message": "Данный почтовый адрес уже зарегистрирован"})
 	} else {
 		c.IndentedJSON(http.StatusCreated, user)
 	}
